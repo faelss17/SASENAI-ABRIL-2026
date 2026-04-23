@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="delete-card p-4 p-lg-5 mx-auto" style="max-width: 720px;">
+    <span class="brand-chip mb-3">Excluir registro</span>
+    <h1 class="h2 fw-bold mb-3">Confirmar exclusão</h1>
+    <p class="text-secondary mb-4">Deseja realmente excluir <strong class="text-light">{{ object }}</strong>? Esta ação não poderá ser desfeita.</p>
+    <form method="post" class="d-flex flex-wrap gap-2">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger px-4">Excluir</button>
+        <a href="javascript:history.back()" class="btn btn-outline-light">Cancelar</a>
+    </form>
+</section>
+{% endblock %}

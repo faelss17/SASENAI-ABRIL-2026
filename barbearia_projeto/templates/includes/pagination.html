@@ -1,0 +1,19 @@
+{% if is_paginated %}
+<nav aria-label="Paginação" class="mt-4">
+    <ul class="pagination justify-content-center flex-wrap gap-2">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link bg-dark border-secondary text-light" href="?page=1">Primeira</a></li>
+            <li class="page-item"><a class="page-link bg-dark border-secondary text-light" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+        {% endif %}
+
+        <li class="page-item active" aria-current="page">
+            <span class="page-link bg-warning border-warning text-dark fw-semibold">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+        </li>
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link bg-dark border-secondary text-light" href="?page={{ page_obj.next_page_number }}">Próxima</a></li>
+            <li class="page-item"><a class="page-link bg-dark border-secondary text-light" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}

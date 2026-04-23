@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Agendamentos | Barbearia Pro{% endblock %}
+
+{% block content %}
+<section class="content-card table-card p-0 overflow-hidden">
+    <div class="p-4 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center flex-wrap list-header-actions">
+        <div>
+            <h1 class="h3 fw-bold mb-1">Agendamentos</h1>
+            <p class="section-subtitle mb-0">Acompanhe a agenda da barbearia em um só lugar.</p>
+        </div>
+        <a href="{% url 'agendamento-create' %}" class="btn btn-warning text-dark fw-semibold">Novo agendamento</a>
+    </div>
+
+    {% if agendamentos %}
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Barbeiro</th>
+                    <th>Serviço</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for agendamento in agendamentos %}
+                <tr>
+                    <td class="fw-semibold">{{ agendamento.cliente.nome }}</td>
+                    <td>{{ agendamento.barbeiro.nome }}</td>
+                    <td>{{ agendamento.servico.nome }}</td>
+                    <td>{{ agendamento.data|date:'d/m/Y' }} às {{ agendamento.horario|time:'H:i' }}</td>
+                    <td>
+                        <span class="badge rounded-pill badge-status-{{ agendamento.status }} px-3 py-2">{{ agendamento.get_status_display }}</span>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-end gap-2 flex-wrap">
+                            <a href="{% url 'agendamento-update' agendamento.pk %}" class="btn btn-outline-light btn-sm">Editar</a>
+                            <a href="{% url 'agendamento-delete' agendamento.pk %}" class="btn btn-outline-danger btn-sm">Excluir</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="empty-state">
+            <strong>Nenhum agendamento cadastrado.</strong><br>
+            Adicione atendimentos para visualizar a agenda aqui.
+        </div>
+    {% endif %}
+</section>
+
+{% include 'includes/pagination.html' %}
+{% endblock %}

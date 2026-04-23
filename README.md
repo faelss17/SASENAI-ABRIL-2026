@@ -1,1 +1,0 @@
-# Atividade-em-Sala---Django

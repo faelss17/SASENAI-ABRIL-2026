@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Barbeiros | Barbearia Pro{% endblock %}
+
+{% block content %}
+<section class="content-card table-card p-0 overflow-hidden">
+    <div class="p-4 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center flex-wrap list-header-actions">
+        <div>
+            <h1 class="h3 fw-bold mb-1">Barbeiros</h1>
+            <p class="section-subtitle mb-0">Controle a equipe e o status de atendimento.</p>
+        </div>
+        <a href="{% url 'barbeiro-create' %}" class="btn btn-warning text-dark fw-semibold">Novo barbeiro</a>
+    </div>
+
+    {% if barbeiros %}
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Especialidade</th>
+                    <th>Telefone</th>
+                    <th>Status</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for barbeiro in barbeiros %}
+                <tr>
+                    <td class="fw-semibold">{{ barbeiro.nome }}</td>
+                    <td>{{ barbeiro.especialidade }}</td>
+                    <td>{{ barbeiro.telefone }}</td>
+                    <td>
+                        {% if barbeiro.ativo %}
+                            <span class="badge rounded-pill badge-status-ativo px-3 py-2">Ativo</span>
+                        {% else %}
+                            <span class="badge rounded-pill badge-status-inativo px-3 py-2">Inativo</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-end gap-2 flex-wrap">
+                            <a href="{% url 'barbeiro-update' barbeiro.pk %}" class="btn btn-outline-light btn-sm">Editar</a>
+                            <a href="{% url 'barbeiro-delete' barbeiro.pk %}" class="btn btn-outline-danger btn-sm">Excluir</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="empty-state">
+            <strong>Nenhum barbeiro cadastrado.</strong><br>
+            Cadastre profissionais para começar a organizar a agenda.
+        </div>
+    {% endif %}
+</section>
+
+{% include 'includes/pagination.html' %}
+{% endblock %}

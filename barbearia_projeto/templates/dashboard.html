@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Barbearia Pro{% endblock %}
+
+{% block content %}
+<section class="hero-card p-4 p-lg-5 mb-4">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+            <span class="brand-chip mb-3">Gestão completa da sua barbearia</span>
+            <h1 class="display-6 fw-bold mb-3">Bem-vindo, {{ user.username }}.</h1>
+            <p class="lead text-secondary mb-4">Controle clientes, equipe, serviços e agenda em uma interface mais moderna, organizada e pronta para apresentar no seu portfólio.</p>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{% url 'agendamento-create' %}" class="btn btn-warning text-dark fw-semibold">Novo agendamento</a>
+                <a href="{% url 'cliente-create' %}" class="btn btn-outline-light">Novo cliente</a>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="content-card p-4 h-100">
+                <p class="section-title mb-2">Acesso rápido</p>
+                <div class="d-grid gap-3">
+                    <a href="{% url 'cliente-list' %}" class="quick-link content-card p-3 d-flex justify-content-between align-items-center">
+                        <span>Gerenciar clientes</span><span>→</span>
+                    </a>
+                    <a href="{% url 'barbeiro-list' %}" class="quick-link content-card p-3 d-flex justify-content-between align-items-center">
+                        <span>Gerenciar barbeiros</span><span>→</span>
+                    </a>
+                    <a href="{% url 'servico-list' %}" class="quick-link content-card p-3 d-flex justify-content-between align-items-center">
+                        <span>Gerenciar serviços</span><span>→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="row g-4 mb-4">
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stats-label">Clientes</div>
+                    <div class="stats-value">{{ total_clientes }}</div>
+                </div>
+                <div class="stats-icon">✂️</div>
+            </div>
+            <div class="text-secondary small">Base de clientes cadastrados no sistema.</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stats-label">Barbeiros</div>
+                    <div class="stats-value">{{ total_barbeiros }}</div>
+                </div>
+                <div class="stats-icon">💈</div>
+            </div>
+            <div class="text-secondary small">Profissionais disponíveis para atendimento.</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stats-label">Serviços</div>
+                    <div class="stats-value">{{ total_servicos }}</div>
+                </div>
+                <div class="stats-icon">🪒</div>
+            </div>
+            <div class="text-secondary small">Catálogo de procedimentos oferecidos.</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="stats-label">Agendamentos</div>
+                    <div class="stats-value">{{ total_agendamentos }}</div>
+                </div>
+                <div class="stats-icon">📅</div>
+            </div>
+            <div class="text-secondary small">Controle diário da agenda da barbearia.</div>
+        </div>
+    </div>
+</section>
+
+<section class="row g-4">
+    <div class="col-lg-8">
+        <div class="content-card table-card p-0 overflow-hidden h-100">
+            <div class="p-4 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                    <h2 class="section-title">Últimos agendamentos</h2>
+                    <div class="section-subtitle">Resumo rápido dos atendimentos mais recentes.</div>
+                </div>
+                <a href="{% url 'agendamento-list' %}" class="btn btn-outline-light btn-sm">Ver agenda</a>
+            </div>
+            {% if ultimos_agendamentos %}
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Barbeiro</th>
+                            <th>Serviço</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for agendamento in ultimos_agendamentos %}
+                        <tr>
+                            <td class="fw-semibold">{{ agendamento.cliente.nome }}</td>
+                            <td>{{ agendamento.barbeiro.nome }}</td>
+                            <td>{{ agendamento.servico.nome }}</td>
+                            <td>{{ agendamento.data|date:'d/m/Y' }} às {{ agendamento.horario|time:'H:i' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <div class="empty-state">
+                    <strong>Nenhum agendamento cadastrado.</strong><br>
+                    Crie o primeiro atendimento para começar a organizar a agenda.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="content-card p-4 h-100">
+            <h2 class="section-title">Resumo por status</h2>
+            <div class="section-subtitle mb-4">Distribuição atual dos atendimentos.</div>
+            {% if agendamentos_por_status %}
+                <div class="d-grid gap-3">
+                    {% for item in agendamentos_por_status %}
+                        <div class="content-card p-3 d-flex justify-content-between align-items-center">
+                            <span class="badge rounded-pill badge-status-{{ item.status }} px-3 py-2">{{ item.label }}</span>
+                            <strong class="fs-5">{{ item.total }}</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state px-0">
+                    <strong>Sem dados disponíveis.</strong><br>
+                    Os status aparecerão aqui após os primeiros agendamentos.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

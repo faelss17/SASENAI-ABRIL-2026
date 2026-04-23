@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Clientes | Barbearia Pro{% endblock %}
+
+{% block content %}
+<section class="content-card table-card p-0 overflow-hidden">
+    <div class="p-4 border-bottom border-secondary-subtle d-flex justify-content-between align-items-center flex-wrap list-header-actions">
+        <div>
+            <h1 class="h3 fw-bold mb-1">Clientes</h1>
+            <p class="section-subtitle mb-0">Gerencie os dados dos clientes cadastrados.</p>
+        </div>
+        <a href="{% url 'cliente-create' %}" class="btn btn-warning text-dark fw-semibold">Novo cliente</a>
+    </div>
+
+    {% if clientes %}
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>E-mail</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td class="fw-semibold">{{ cliente.nome }}</td>
+                    <td>{{ cliente.telefone }}</td>
+                    <td>{{ cliente.email }}</td>
+                    <td>
+                        <div class="d-flex justify-content-end gap-2 flex-wrap">
+                            <a href="{% url 'cliente-update' cliente.pk %}" class="btn btn-outline-light btn-sm">Editar</a>
+                            <a href="{% url 'cliente-delete' cliente.pk %}" class="btn btn-outline-danger btn-sm">Excluir</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="empty-state">
+            <strong>Nenhum cliente cadastrado.</strong><br>
+            Clique em <em>Novo cliente</em> para adicionar o primeiro registro.
+        </div>
+    {% endif %}
+</section>
+
+{% include 'includes/pagination.html' %}
+{% endblock %}
