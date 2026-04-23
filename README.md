@@ -1,4 +1,4 @@
-# Barbearia Pro
+# Barbearia do TL
 
 Sistema web em **Django** para gerenciamento de barbearia, criado para portfólio. O projeto atende aos requisitos de autenticação, páginas protegidas, CRUD via interface web, CRUD via API, mensagens de feedback, herança de templates e organização em camadas, com interface responsiva em Bootstrap.
 
