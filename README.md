@@ -1,6 +1,6 @@
-# Barbearia do TL
+# Barbearia Pro
 
-Sistema web em **Django** para gerenciamento de barbearia, criado para portfólio. O projeto atende aos requisitos de autenticação, páginas protegidas, CRUD via interface web, CRUD via API, mensagens de feedback, herança de templates e organização em camadas, agora com interface responsiva em Bootstrap.
+Sistema web em **Django** para gerenciamento de barbearia, criado para portfólio. O projeto atende aos requisitos de autenticação, páginas protegidas, CRUD via interface web, CRUD via API, mensagens de feedback, herança de templates e organização em camadas, com interface responsiva em Bootstrap.
 
 ## Funcionalidades
 
@@ -15,7 +15,6 @@ Sistema web em **Django** para gerenciamento de barbearia, criado para portfóli
 - Interface modernizada com Bootstrap 5
 - Validações de formulário e de regras de negócio
 
-
 ## Visual
 
 - Navbar com menu responsivo
@@ -23,6 +22,14 @@ Sistema web em **Django** para gerenciamento de barbearia, criado para portfóli
 - Listagens com tabelas responsivas
 - Formulários estilizados com Bootstrap
 - Layout preparado para desktop e mobile
+
+## Tecnologias utilizadas
+
+- Python
+- Django
+- Django REST Framework
+- SQLite3
+- Bootstrap 5
 
 ## Models do projeto
 
@@ -89,8 +96,7 @@ Acesse no navegador:
 - Sistema web: `http://127.0.0.1:8000/`
 - Admin Django: `http://127.0.0.1:8000/admin/`
 
-
-## Executando os testes
+## Executando os testes básicos do projeto
 
 ```bash
 python manage.py test
@@ -99,6 +105,7 @@ python manage.py test
 ## Rotas web
 
 - `/login/`
+- `/logout/`
 - `/`
 - `/clientes/`
 - `/barbeiros/`
@@ -107,7 +114,7 @@ python manage.py test
 
 ## Rotas da API
 
-Todas exigem autenticação.
+Todas as rotas da API exigem autenticação, conforme configuração do Django REST Framework.
 
 - `/api/clientes/`
 - `/api/barbeiros/`
